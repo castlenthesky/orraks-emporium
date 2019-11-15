@@ -4,6 +4,7 @@ function apiController() {
   }
 
   function get(req, res) {
+    console.log('accessing root directory');
     return res.send('Welcome to the main page of the appliation API.');
   }
 
