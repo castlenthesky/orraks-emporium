@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000; // Establish port to be used
 
 // Instantiate required packages
 const app = express(); // Instantiate the express module
-// const db = require('../config/mongo');
+const db = require('../config/mongo');
 
 // Define application settings
 app.use(morgan('tiny')); // Enable light logging from express.

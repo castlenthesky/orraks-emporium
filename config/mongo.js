@@ -20,11 +20,11 @@ module.exports = (
       },
     )
     .then(() => {
-      debug('MongoDB Connected...');
+      console.log('MongoDB Connected...');
       return mongoose.connection;
     })
     .catch((error) => {
-      debug(error);
+      console.log(error);
       return null;
     })
 );
