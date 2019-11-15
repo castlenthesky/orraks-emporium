@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000; // Establish port to be used
 
 // Instantiate required packages
 const app = express(); // Instantiate the express module
-const db = require('../config/mongo');
+// const db = require('../config/mongo');
 
 // Define application settings
 app.use(morgan('tiny')); // Enable light logging from express.
@@ -20,7 +20,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Define routing
-app.use('/', require('./routes/apiRouter')());
+app.route('/')
+  .get((req, res) => {
+    res.send(`Welcome to the app, ${process.env.MONGOUSER}. You are trying to connect to the following server: ${process.env.MONGOSERVER}`);
+  });
+// app.use('/', require('./routes/apiRouter')());
 
 // Begin listening
 app.listen(port, () => {
