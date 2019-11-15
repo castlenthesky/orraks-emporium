@@ -20,11 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Define routing
-app.route('/')
-  .get((req, res) => {
-    res.send(`Welcome to the app, ${process.env.MONGOUSER}. You are trying to connect to the following server: ${process.env.MONGOSERVER}`);
-  });
-// app.use('/', require('./routes/apiRouter')());
+app.use('/', require('./routes/apiRouter')());
 
 // Begin listening
 app.listen(port, () => {
