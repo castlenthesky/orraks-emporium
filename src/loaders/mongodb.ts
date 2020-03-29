@@ -7,12 +7,11 @@ export default async (): Promise<Db> => {
   const connection = await mongoose.connect(
     config.mongoURI,
     {
-      // user: config.mongoUser,
-      // pass: config.mongoPass,
       useNewUrlParser: true, 
       useCreateIndex: true ,
       useUnifiedTopology: true
     }
   );
+
   return connection.connection.db;
 };

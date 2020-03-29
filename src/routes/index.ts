@@ -6,6 +6,7 @@ function router() {
     .get((req, res) => {
       return res.status(201).send('Welcome to the app.')
     })
+  mainRouter.use('/materials', require('./materials')());
   mainRouter.use('/users', require('./userRouter')());
   return mainRouter;
 }
