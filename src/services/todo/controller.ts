@@ -13,6 +13,14 @@ export async function get (req: Request, res: Response) {
   });
 }
 
+export async function getRandom (req: Request, res: Response) {
+  const collection = getCollection('todos');
+  const [entry] = await collection.aggregate([
+    {$sample: {size: 1}}
+  ]).toArray();
+  res.json(entry)
+}
+
 export async function post (req: Request, res: Response) {
   console.info('posting records')
 }

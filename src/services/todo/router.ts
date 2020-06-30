@@ -3,6 +3,9 @@ import * as controller from './controller'
 
 const router = new Router();
 
+router.route('/random')
+  .get([controller.getRandom])
+
 router.route('/')
   .get([controller.get])
   .post([controller.post])
