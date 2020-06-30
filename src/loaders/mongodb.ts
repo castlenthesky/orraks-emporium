@@ -1,17 +1,32 @@
-import * as mongoose from 'mongoose';
-import { Db } from 'mongodb';
-import config from '../config';
+import { MongoClient } from 'mongodb';
+import config from '../config'
 
-export default async (): Promise<Db> => {
-  console.log(`Connecting to server...`);
-  const connection = await mongoose.connect(
-    config.mongoURI,
-    {
-      useNewUrlParser: true, 
-      useCreateIndex: true ,
-      useUnifiedTopology: true
-    }
-  );
+const clientOptions = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  poolSize: 10,
+}
 
-  return connection.connection.db;
-};
+export default class MongoLoader {
+  // Define static variable to store the client
+  public static client: MongoClient;
+
+  // Define static variable to create the initial connection
+  public static connect() {
+    return new Promise((resolve, reject) => {
+      MongoClient.connect(config.mongo.url, clientOptions,
+      (err, client: MongoClient) => {
+        if (err) {
+          reject(err);
+        } else {
+          MongoLoader.client = client;
+          resolve(client)
+        }
+      })
+    })
+  }
+}
+
+export function getCollection (collectionName: string) {
+  return MongoLoader.client.db(config.mongo.db).collection(collectionName);
+}

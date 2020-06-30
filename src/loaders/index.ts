@@ -1,10 +1,14 @@
+import { Application } from 'express'
 import expressLoader from './express';
-import mongoLoader from './mongodb';
+import MongoLoader from './mongodb';
+import {getCollection} from './mongodb'
 
-export default async ({ expressApp }) => {
-  const mongoConnection = await mongoLoader();
+export default async () => {
+  const mongoConnection = await MongoLoader.connect();
   console.log('DB loaded and connected!')
 
-  await expressLoader({ app: expressApp });
+  const app:Application = await expressLoader();
   console.log('Express Initialized...');
+  return { app, mongoConnection }
 }
+

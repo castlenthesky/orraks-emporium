@@ -10,8 +10,13 @@ if (!envConfig) {
 }
 
 export default {
-  appurl: process.env.APPURL,
-  port: parseInt(process.env.PORT) || 8081,
-  mongoURI: process.env.MONGOURI,
-  username: process.env.USERNAME,
-}
+  app: {
+    url: process.env.APPURL || 'localhost',
+    port: process.env.PORT || 4000,
+
+  },
+  mongo: {
+    url: process.env.MONGOURL,
+    db: process.env.MONGODBNAME
+  },
+};

@@ -1,0 +1,5 @@
+APPPORT=your_application_port
+MONGOURI=mongodb://localhost:27017/mydb
+MONGOUSER=your_mongo_username
+MONGOPASS=your_mongo_password
+MONGODATABASE=your_mongo_database
