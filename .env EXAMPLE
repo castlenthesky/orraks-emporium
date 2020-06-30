@@ -1,5 +1,3 @@
-APPPORT=your_application_port
-MONGOURI=mongodb://localhost:27017/mydb
-MONGOUSER=your_mongo_username
-MONGOPASS=your_mongo_password
-MONGODATABASE=your_mongo_database
+APPPORT=4000
+MONGOURL=mongodb+srv://<username>:<password>@cluster.mongodb.net/test
+MONGODBNAME=todo

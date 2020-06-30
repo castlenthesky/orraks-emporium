@@ -17,6 +17,11 @@ export default {
   },
   mongo: {
     url: process.env.MONGOURL,
-    db: process.env.MONGODBNAME
+    db: process.env.MONGODBNAME,
+    clientOptions: {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      poolSize: 10,
+    }
   },
 };

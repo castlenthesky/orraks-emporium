@@ -1,11 +1,5 @@
-import { MongoClient } from 'mongodb';
 import config from '../config'
-
-const clientOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  poolSize: 10,
-}
+import { MongoClient } from 'mongodb';
 
 export default class MongoLoader {
   // Define static variable to store the client
@@ -14,7 +8,7 @@ export default class MongoLoader {
   // Define static variable to create the initial connection
   public static connect() {
     return new Promise((resolve, reject) => {
-      MongoClient.connect(config.mongo.url, clientOptions,
+      MongoClient.connect(config.mongo.url, config.mongo.clientOptions,
       (err, client: MongoClient) => {
         if (err) {
           reject(err);
