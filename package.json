@@ -33,7 +33,8 @@
     "mongodb": "^3.5.5",
     "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
-    "nodemon": "^1.19.1"
+    "nodemon": "^2.0.4",
+    "short-id": "0.1.0-1"
   },
   "devDependencies": {
     "@types/mocha": "^7.0.2",
@@ -55,7 +56,5 @@
       "NODE_ENV": "development"
     }
   },
-  "mocha": {
-
-  }
+  "mocha": {}
 }

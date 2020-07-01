@@ -1,3 +1,3 @@
-import todoRoutes from './router'
+import todoRoutes from "./router";
 
-export { todoRoutes }
+export { todoRoutes };

@@ -1,4 +1,1 @@
-{
-  "mocha.subdirectory": "..\\..\\..\\..\\c:\\Users\\CASTL\\programminng\\orraks-emporium\\test",
-  "mocha.files.glob": "./lib/**/*.ts"
-}
+{}
