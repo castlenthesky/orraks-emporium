@@ -1,12 +1,13 @@
-import { getCollection } from "./loaders/mongodb";
+export async function testFunction01(
+  varOne: number,
+  varTwo: number
+): Promise<number> {
+  return varOne + varTwo;
+}
 
-const collection = getCollection("todos");
-
-collection.find({}).toArray((err, items) => {
-  if (err) {
-    console.error("Caught erroer:", err);
-  } else {
-    console.info(items);
-    // return res.json(items).end();
-  }
-});
+export async function testFunction02(
+  varOne: number,
+  varTwo: number
+): Promise<number> {
+  return varOne - varTwo;
+}
