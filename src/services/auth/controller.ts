@@ -3,16 +3,16 @@ import { ObjectId } from "mongodb";
 
 import { loadCollection } from "../../loaders/mongodb";
 
-const controllerCollection = "todos";
+const controllerCollection = "users";
 
 export async function get(req: Request, res: Response) {
   const collection = loadCollection(controllerCollection);
-  collection.find(req.query).toArray((err, items) => {
+  collection.find(req.query).toArray((err, users) => {
     if (err) {
       console.error("Caught erroer:", err);
       return res.status(500).end();
     } else {
-      return res.status(200).json(items).end();
+      return res.status(200).json(users).end();
     }
   });
 }
@@ -27,7 +27,6 @@ export async function getRandom(req: Request, res: Response) {
 
 export async function post(req: Request, res: Response) {
   console.info("validating post body");
-
   const collection = loadCollection(controllerCollection);
   const result = await collection.insertOne(req.body, (err, result) => {
     if (err) {

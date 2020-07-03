@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { todoRoutes } from "./todo";
-// import { authRoutes } from "./auth";
-// import { userRoutes } from "./user";
+import { authRoutes } from "./auth";
+import { userRoutes } from "./user";
 
 const apiRouter = new Router();
 
@@ -10,7 +10,7 @@ apiRouter.get("/", (req: Request, res: Response) => {
 });
 
 apiRouter.use("/todo", todoRoutes);
-// apiRouter.use("/auth", authRoutes);
-// apiRouter.use("/users", userRoutes);
+apiRouter.use("/auth", authRoutes);
+apiRouter.use("/users", userRoutes);
 
 export default apiRouter;

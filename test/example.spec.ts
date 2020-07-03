@@ -1,7 +1,7 @@
 import { expect } from "chai";
-import { testFunction01, testFunction02 } from "../src/sandbox";
+import { testFunction01, testFunction02 } from "./example";
 
-describe("Sandbox Tests", () => {
+describe("Example Tests", () => {
   describe("Basic Unit Test 01", () => {
     it("1 + 1 should equal 2", async () => {
       expect(await testFunction01(1, 1)).to.equal(2);
