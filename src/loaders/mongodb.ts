@@ -6,21 +6,17 @@ export default class MongoLoader {
   public static client: MongoClient;
 
   // Define static variable to create the initial connection
-  public static connect() {
-    return new Promise((resolve, reject) => {
-      MongoClient.connect(
-        config.mongo.url,
-        config.mongo.clientOptions,
-        (err, client: MongoClient) => {
-          if (err) {
-            reject(err);
-          } else {
-            MongoLoader.client = client;
-            resolve(client);
-          }
+  public static async connect() {
+    MongoClient.connect(
+      config.mongo.url,
+      config.mongo.clientOptions,
+      (err, client: MongoClient) => {
+        if (err) {
+          throw new Error(err);
         }
-      );
-    });
+        MongoLoader.client = client;
+      }
+    );
   }
 }
 

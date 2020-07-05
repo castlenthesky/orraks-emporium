@@ -1,4 +1,14 @@
-import { argon2i } from "argon2-ffi";
+import { passwordHash } from "../../helpers";
+import * as shortid from "short-id";
+
+export function isValidUsername(string: string): boolean {
+  const hasSpace = RegExp(/\s/i);
+  if (hasSpace.test(string) == true) {
+    return false;
+  }
+  const isValidString = RegExp(/^[a-z][A-Z0-9_.-]{6,23}$/i);
+  return isValidString.test(string);
+}
 
 enum UserRole {
   user,
@@ -8,42 +18,44 @@ enum UserRole {
   superuser,
 }
 
-export class User {
+export interface IUserData {
   username: string;
   password: string;
   email: string;
-  role: UserRole;
-  title: string;
-  avartarURL: string;
-  firstname: string;
-  lastname: string;
-
-  constructor(useroptions: {
-    username: string;
-    password: string;
-    email: string;
-    role?: UserRole;
-    firstname?: string;
-    lastname?: string;
-    title?: string;
-  }) {
-    this.username = useroptions.username;
-    this.password = hash(useroptions.password);
-    this.email = useroptions.email;
-    this.role = useroptions.role;
-    this.firstname = useroptions.firstname;
-    this.lastname = useroptions.lastname;
-    this.title = useroptions.title;
-  }
+  firstname?: string;
+  lastname?: string;
+  role?: string;
+  title?: string;
+  avatarURL?: string;
 }
 
-function hash(password: string): string {
-  return `Hashed_${password}`;
+export async function createUser(userData: IUserData) {
+  return Object.freeze({
+    _id: shortid.generate(),
+    username: userData.username,
+    password: await passwordHash(userData.password),
+    email: userData.email,
+    role: userData.role || "user",
+    title: userData.title || "aspiring developer",
+    avatarURL:
+      userData.avatarURL || "http://www.somedomain.com/imageaddress.png",
+    firstname: userData.firstname || null,
+    lastname: userData.lastname || null,
+    createdAt: Date.now(),
+    modifiedAt: Date.now(),
+  });
 }
 
-const user = new User({
-  username: "castlenthesky",
-  password: "password",
-  email: "whatever@gmail.com",
-});
-console.info(user);
+// export class User {
+//   public username: string;
+//   constructor({ username, password, firstname = "turd", ...others }) {
+//     this.username = username;
+//   }
+// }
+
+// export class User {
+//   public username: string;
+//   constructor(...args) {
+//     this.username = username;
+//   }
+// }

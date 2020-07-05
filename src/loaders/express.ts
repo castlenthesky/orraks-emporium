@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
-import requestLogger from "../middlewares/requestLogger";
+import { requestLogger } from "../middlewares";
 
 // User-defined application routes
 import { apiRouter } from "../services";

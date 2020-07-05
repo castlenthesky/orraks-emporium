@@ -23,4 +23,7 @@ export default {
       poolSize: 10,
     },
   },
+  jwt: {
+    secret: process.env.SECRET_JWT_KEY,
+  },
 };

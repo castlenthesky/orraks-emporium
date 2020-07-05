@@ -11,9 +11,8 @@ export async function get(req: Request, res: Response) {
     if (err) {
       console.error("Caught erroer:", err);
       return res.status(500).end();
-    } else {
-      return res.status(200).json(items).end();
     }
+    return res.status(200).json(items).end();
   });
 }
 

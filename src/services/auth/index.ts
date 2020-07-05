@@ -1,3 +1,1 @@
-import authRoutes from "./router";
-
-export { authRoutes };
+export { authRoutes } from "./router";

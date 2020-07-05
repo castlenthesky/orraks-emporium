@@ -1,23 +1,24 @@
 import { Router } from "express";
 import * as controller from "./controller";
 
-const router = new Router();
+const userRoutes = new Router();
 
-router
-  .route("/random") // Handle routes to provide a random record
-  .get([controller.getRandom]);
-
-router
+userRoutes
   .route("/") // Handle routes for getting and posting records
   .get([controller.get])
   .post([controller.post]);
 
-router
-  .route("/:id") // Handle routes for specific records
-  .all([controller.findByID])
-  .get([controller.getByID])
-  .put([controller.putByID])
-  .patch([controller.patchByID])
-  .delete([controller.deleteByID]);
+userRoutes
+  .route("/:username") // Handle routes for specific records
+  .all([controller.findByUsername])
+  .get([controller.getByUsername])
+  .put([controller.putByUsername])
+  .patch([controller.patchByUsername])
+  .delete([controller.deleteByUsername]);
 
-export default router;
+// userRoutes
+// .route("/:username/projects/:projectID") // Handle routes for specific records
+// .all([controller.findByUsername])
+// .use()
+
+export { userRoutes };

@@ -1,19 +1,14 @@
 import { Router } from "express";
 import * as controller from "./controller";
 
-const router = new Router();
+const authRoutes = new Router();
 
-router
+authRoutes
   .route("/") // Handle routes for getting and posting records
-  .get([controller.get])
-  .post([controller.post]);
+  .post([
+    // locate, validate, and attach user to request
+    controller.hasValidCredentials,
+    controller.generateToken, // generate token
+  ]);
 
-router
-  .route("/:id") // Handle routes for specific records
-  .all([controller.findByID])
-  .get([controller.getByID])
-  .put([controller.putByID])
-  .patch([controller.patchByID])
-  .delete([controller.deleteByID]);
-
-export default router;
+export { authRoutes };

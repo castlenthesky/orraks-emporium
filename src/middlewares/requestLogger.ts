@@ -1,10 +1,6 @@
 import { Request, Response, Next } from "express";
 
-export default function requestLoggerMiddleware(
-  req: Request,
-  res: Response,
-  next: Next
-) {
+function requestLogger(req: Request, res: Response, next: Next) {
   // console.info(`${req.method} ${req.originalUrl}`);
   const start = new Date().getTime();
   res.on("finish", () => {
@@ -16,3 +12,5 @@ export default function requestLoggerMiddleware(
   });
   next();
 }
+
+export { requestLogger };
