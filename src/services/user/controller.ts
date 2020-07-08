@@ -6,6 +6,19 @@ import { existsInCollection } from "../../helpers/queryHelpers";
 
 const controllerCollection = "users";
 
+// Middleware for locating a user with a given username and attaching to the request
+export async function findByUsername(req: Request, res: Response, next: Next) {
+  const collection = loadCollection(controllerCollection); //Reference collection
+  const [record] = await collection
+    .find({ username: req.params.username })
+    .toArray();
+  if (!record) {
+    return res.status(404).send({ error: "Document does not exist." }).end();
+  }
+  req.user = record;
+  return next();
+}
+
 export async function get(req: Request, res: Response) {
   const collection = loadCollection(controllerCollection);
   collection.find(req.query).toArray((err, users) => {
@@ -82,21 +95,9 @@ export async function post(req: Request, res: Response) {
   });
 }
 
-export async function findByUsername(req: Request, res: Response, next: Next) {
-  const collection = loadCollection(controllerCollection); //Reference collection
-  const [record] = await collection
-    .find({ username: req.params.username })
-    .toArray();
-  if (!record) {
-    return res.status(404).send({ error: "Document does not exist." }).end();
-  }
-  req.record = record;
-  return next();
-}
-
 export async function getByUsername(req: Request, res: Response) {
   // Controller code goes here...
-  return res.status(200).send(req.record).end();
+  return res.status(200).send(req.user).end();
 }
 
 export async function putByUsername(req: Request, res: Response) {

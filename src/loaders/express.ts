@@ -5,6 +5,7 @@ import { requestLogger } from "../middlewares";
 
 // User-defined application routes
 import { apiRouter } from "../services";
+import { findByUsername } from "../services/user/controller";
 
 export default async function expressLoader(): Promise<express.Application> {
   const app = express();
@@ -25,6 +26,7 @@ export default async function expressLoader(): Promise<express.Application> {
 
   // Setup user-defined middlewares
   app.use([requestLogger]);
+  app.param("username", findByUsername);
 
   // Setup user-defined application routes
   app.use("/", apiRouter);

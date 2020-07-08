@@ -1,1 +1,1 @@
-export { userRoutes } from "./router";
+export { userRoutes, registerRoute, profileRoute } from "./router";

@@ -1,7 +1,10 @@
 import { Router } from "express";
 import * as controller from "./controller";
+import { hasValidToken, allowedRoles } from "../../middlewares";
 
 const router = new Router();
+
+router.use([hasValidToken, allowedRoles(["self", "user", "superuser"])]);
 
 router
   .route("/random") // Handle routes to provide a random record
