@@ -1,7 +1,6 @@
 import { Router, Request, Response, Next } from "express";
 import * as controller from "./controller";
 import { hasValidToken, allowedRoles } from "../../middlewares";
-import { todoRoutes } from "../todo";
 
 const userRoutes = new Router();
 

@@ -8,8 +8,8 @@ const controllerCollection = "users";
 
 // Middleware for locating a user with a given username and attaching to the request
 export async function findByUsername(req: Request, res: Response, next: Next) {
-  const collection = loadCollection(controllerCollection); //Reference collection
-  const [record] = await collection
+  req.db = loadCollection(controllerCollection); //Reference collection
+  const [record] = await req.db
     .find({ username: req.params.username })
     .toArray();
   if (!record) {
@@ -21,21 +21,18 @@ export async function findByUsername(req: Request, res: Response, next: Next) {
 
 export async function get(req: Request, res: Response) {
   const collection = loadCollection(controllerCollection);
-  collection.find(req.query).toArray((err, users) => {
-    if (err) {
-      console.error("Caught erroer:", err);
-      return res.status(500).end();
-    } else {
-      return res.status(200).json(users).end();
-    }
+  const dbResults = await collection.find(req.query).toArray();
+  const userList = [];
+  dbResults.forEach((user) => {
+    delete user.password;
+    userList.push(user);
   });
+  return res.send(userList).end(201);
 }
 
 export async function post(req: Request, res: Response) {
   let errors = [];
-
   // TODO: Handle posts with multiple users
-  // console.info(req.body.length);
 
   // Validate the body of the post
   if (!req.body.username) {
@@ -83,33 +80,41 @@ export async function post(req: Request, res: Response) {
   const newUser = await createUser(userData);
 
   // Insert the new user into the collection
-  console.info("Inserting document...");
   const collection = loadCollection(controllerCollection);
   collection.insertOne(newUser, (err, result) => {
     if (err) {
       return res.status(504).send({ error: err }).end();
     }
-    console.info("Document successfully inserted!");
     // TODO: delete hashed passwords from the response
     return res.status(201).json(result.ops).end();
   });
 }
 
 export async function getByUsername(req: Request, res: Response) {
-  // Controller code goes here...
+  delete req.user.password;
   return res.status(200).send(req.user).end();
 }
 
 export async function putByUsername(req: Request, res: Response) {
   // Controller code goes here...
-  return res
-    .status(200)
-    .json({ response: "this api endpoing has not been fully implemented" })
-    .end();
+  if (
+    existsInCollection(controllerCollection, "username", req.params.username)
+  ) {
+    console.info("user found");
+    // Handle update of existing user
+    return res.send("found user - api endpoint under construction").end(200);
+  } else {
+    console.info("user not found");
+    // TODO: hande unfound record and create a new record
+    return res
+      .send("user not found - api endpoint under construction")
+      .end(200);
+  }
 }
 
 export async function patchByUsername(req: Request, res: Response) {
   // Controller code goes here...
+  console.info(req.user._id);
   return res
     .status(200)
     .json({ response: "this api endpoing has not been fully implemented" })
@@ -117,7 +122,6 @@ export async function patchByUsername(req: Request, res: Response) {
 }
 
 export async function deleteByUsername(req: Request, res: Response) {
-  // Controller code goes here...
   const collection = loadCollection(controllerCollection); //Reference collection
   collection.deleteOne(
     { username: req.params.username },
@@ -125,8 +129,9 @@ export async function deleteByUsername(req: Request, res: Response) {
       if (err) {
         return res.status(401).send({ error: err }).end();
       }
+      delete req.user.password;
       const response = {
-        record: req.record,
+        record: req.user,
         actionTaken: "Delete",
         result: queryResult.result.ok,
       };
