@@ -4,7 +4,7 @@ import { MongoClient } from "mongodb";
 export default class MongoLoader {
   // Define static variable to store the client
   public static client: MongoClient;
-
+  public static status: string = "inactive";
   // Define static variable to create the initial connection
   public static async connect() {
     MongoClient.connect(
@@ -15,6 +15,7 @@ export default class MongoLoader {
           throw new Error(err);
         }
         MongoLoader.client = client;
+        MongoLoader.status = "active";
       }
     );
   }

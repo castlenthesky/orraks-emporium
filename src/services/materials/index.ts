@@ -1,0 +1,1 @@
+export { materialRoutes } from "./router";
