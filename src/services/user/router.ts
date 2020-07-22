@@ -8,7 +8,7 @@ userRoutes
   .route("/") // Handle routes for getting and posting records
   .get([
     hasValidToken,
-    allowedRoles(["developer", "superuser", "admin"]),
+    allowedRoles(["developer", "superuser"]),
     controller.get,
   ]);
 
@@ -16,12 +16,9 @@ userRoutes
   .route("/:username") // Handle routes for specific records
   .all([hasValidToken, controller.findByUsername])
   .get([allowedRoles(["all"]), controller.getByUsername])
-  .put([
-    allowedRoles(["developer", "admin", "superuser"]),
-    controller.putByUsername,
-  ])
+  .put([allowedRoles(["developer", "superuser"]), controller.putByUsername])
   .patch([
-    allowedRoles(["self", "admin", "developer", "superuser"]),
+    allowedRoles(["self", "developer", "superuser"]),
     controller.patchByUsername,
   ])
   .delete([allowedRoles(["self", "superuser"]), controller.deleteByUsername]);
