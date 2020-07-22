@@ -8,7 +8,7 @@ userRoutes
   .route("/") // Handle routes for getting and posting records
   .get([
     hasValidToken,
-    allowedRoles(["developer", "superuser"]),
+    allowedRoles(["developer", "superuser", "admin"]),
     controller.get,
   ]);
 

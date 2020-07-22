@@ -5,7 +5,7 @@ function allowedRoles(allowedRoles: string[]) {
   return (req: Request, res: Response, next: Next) => {
     // Allowed roles are checked against the user presenting
     // verified token the request
-    if (allowedRoles.includes("all")) {
+    if (allowedRoles.includes("all") || req.token.role == "admin") {
       return next();
     }
     if (
